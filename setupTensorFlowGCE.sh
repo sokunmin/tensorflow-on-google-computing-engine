@@ -1,3 +1,18 @@
+#!/bin/bash
+#
+# This script will hopefully save you a lot of time setting up GCE 
+# (Google Compute Engine) to be ready to run TensorFlow.
+#
+# Tested using the following environment:
+# - n1-highcpu-4 instance with 3.6GB RAM
+# - Running vanilla Ubuntu Trusty 14.04 LTS.
+# - 20GB persistent disk.
+#
+# @author Jason Mayes
+#
+# Excessive commenting has been included below for clarity :-)
+# Save this script to /home/yourUserName, chmod +x setupTensorFlowGCE.sh, + run
+# using ./setupTensorFlowGCE.sh
 
 mkdir tensorflow
 cd tensorflow
@@ -13,7 +28,7 @@ echo "$GREEN *** Installing utilities *** $NC"
 echo "$GREEN ########################################################## $NC"
 sudo apt-get update
 sudo apt-get install unzip git-all pkg-config zip g++ zlib1g-dev
-echo 'Press any key to continue installation...\n'
+echo 'Press [Enter] to continue installation...\n'
 read null
 
 ################################################################################
@@ -26,7 +41,7 @@ echo "$GREEN ########################################################## $NC"
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
-echo 'Press any key to continue installation...\n'
+echo 'Press [Enter] to continue installation...\n'
 read null
 
 ################################################################################
@@ -40,7 +55,7 @@ chmod +x bazel-installer-linux-x86_64.sh
 sudo ./bazel-installer-linux-x86_64.sh
 rm bazel-installer-linux-x86_64.sh
 sudo chown $USER:$USER ~/.cache/bazel/
-echo 'Press any key to continue installation...\n'
+echo 'Press [Enter] to continue installation...\n'
 read null
 
 ################################################################################
@@ -53,7 +68,7 @@ sudo apt-get install swig
 sudo apt-get install build-essential python-setuptools python-dev python-pip checkinstall
 sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
 libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
-echo 'Press any key to continue installation...\n'
+echo 'Press [Enter] to continue installation...\n'
 read null
 
 
@@ -113,7 +128,7 @@ while true; do
       1) echo "$GREEN *** Cloning TensorFlow from GitHub *** $NC"
          git clone --recurse-submodules -b r$TF_VER https://github.com/tensorflow/tensorflow.git
          sed -i 's/kDefaultTotalBytesLimit = 64/kDefaultTotalBytesLimit = 128/' tensorflow/google/protobuf/src/google/protobuf/io/coded_stream.h
-         break;;
+         ;;
       2) sudo pip3 install --upgrade pip
          sudo pip3 install --upgrade $TF_BINARY_URL
          echo "$GREEN *** Installing Numpy & Matplotlib *** $NC"
@@ -122,7 +137,7 @@ while true; do
          ipython-notebook python-pandas python-sympy python-nose
          sudo pip3 install numpy --upgrade
          sudo pip3 install matplotlib --upgrade
-         break;;
+         ;;
       3) sudo pip3 install --upgrade pip
          sudo apt-get install python-pip python-dev python-virtualenv
          sudo pip3 install --upgrade $VIR_URL
@@ -130,12 +145,11 @@ while true; do
          sudo pip3 install --upgrade $TF_BINARY_URL
          source ~/tensorflow/bin/activate
          echo "$GREEN *** Installing Numpy & Matplotlib *** $NC"
-         sudo apt-get install python-numpy
          sudo apt-get install python-numpy python-scipy python-matplotlib ipython \
          ipython-notebook python-pandas python-sympy python-nose
          sudo pip3 install numpy --upgrade
          sudo pip3 install matplotlib --upgrade
-         break;;
+         ;;
       4) wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_64.sh
          chmod +x Anaconda3-4.2.0-Linux-x86_64.sh
          bash ./Anaconda3-4.2.0-Linux-x86_64.sh
@@ -143,7 +157,7 @@ while true; do
          ~/anaconda3/bin/conda create -n tensorflow python=3.5
          source activate tensorflow
          ~/anaconda3/bin/conda install ipython
-         break;;
+         ;;
       5) sudo apt-get install apt-transport-https ca-certificates
          sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
          echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' >> docker.list
@@ -164,9 +178,9 @@ while true; do
          sudo pip3 install matplotlib --upgrade
          #reboot to take effect: https://goo.gl/dJDaKY
          #docker run -it -p 8888:8888 -p 6006:6006 --name tensorflow gcr.io/tensorflow/tensorflow
-         echo "Run 'docker run -it -p 8888:8888 -p 6006:6006 --name tensorflow gcr.io/tensorflow/tensorflow' after system re-login or reboot."
+         echo "$GREEN Run 'docker run -it -p 8888:8888 -p 6006:6006 --name tensorflow gcr.io/tensorflow/tensorflow' after system re-login or reboot.$NC"
          read -rsp $'Press any key to continue...\n' -n1 key
-         break;;
+         ;;
        6) break;;
        *) echo "Please answer 1) Source code, 2) pip 3) Virtualenv 4) Anaconda 5) Docker 6) skip? [1/2/3/4/5/6]";;
    esac
@@ -174,7 +188,7 @@ done
 ################################################################################
 # GCE has no swap, prevent trying to use one else out of virtual memory error.
 ################################################################################
-echo 'Press any key to continue installation...\n'
+echo 'Press [Enter] to continue installation...\n'
 read null
 
 
