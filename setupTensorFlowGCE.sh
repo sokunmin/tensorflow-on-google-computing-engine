@@ -1,18 +1,3 @@
-#!/bin/bash
-#
-# This script will hopefully save you a lot of time setting up GCE 
-# (Google Compute Engine) to be ready to run TensorFlow.
-#
-# Tested using the following environment:
-# - n1-highcpu-4 instance with 3.6GB RAM
-# - Running vanilla Ubuntu Trusty 14.04 LTS.
-# - 20GB persistent disk.
-#
-# @author Jason Mayes
-#
-# Excessive commenting has been included below for clarity :-)
-# Save this script to /home/yourUserName, chmod +x setupTensorFlowGCE.sh, + run
-# using ./setupTensorFlowGCE.sh
 
 mkdir tensorflow
 cd tensorflow
@@ -62,9 +47,12 @@ read null
 # Install Swig
 ################################################################################
 echo "$GREEN ########################################################## $NC"
-echo "$GREEN *** Installing swig *** $NC"
+echo "$GREEN *** Installing swig & python deps *** $NC"
 echo "$GREEN ########################################################## $NC"
 sudo apt-get install swig
+sudo apt-get install build-essential python-setuptools python-dev python-pip checkinstall
+sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
+libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
 echo 'Press any key to continue installation...\n'
 read null
 
@@ -97,9 +85,7 @@ while true; do
        sudo add-apt-repository ppa:fkrull/deadsnakes
        sudo apt-get update
        sudo apt-get install python3.5
-       sudo apt-get install python-setuptools python-dev python-pip libzmq-dev
-       sudo apt-get install build-essential checkinstall libreadline-gplv2-dev \
-       libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+       sudo apt-get install libzmq-dev
 
        # update-alternatives: https://goo.gl/NRvWgY
        sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
@@ -215,3 +201,4 @@ sudo mkswap /var/swap.img
 sudo swapon /var/swap.img
 free
 echo "$GREEN Ready to run TensorFlow! $NC"
+
