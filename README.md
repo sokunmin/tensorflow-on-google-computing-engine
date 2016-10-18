@@ -14,5 +14,8 @@ This script is derived from https://github.com/jasonmayes/Tensor-Flow-on-Google-
 4. Anaconda
 5. Docker
 
-
+#Setup environment
+* Ubuntu 14.04
+* Tensorflow r0.11-cpu
+* Python 3.5
 
