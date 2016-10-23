@@ -158,6 +158,8 @@ while true; do
          ~/anaconda3/bin/conda create -n tensorflow python=3.5
          source activate tensorflow
          ~/anaconda3/bin/conda install ipython
+         conda install -c conda-forge tensorflow
+         pip3 install --ignore-installed --upgrade $TF_BINARY_URL
          ;;
       5) sudo apt-get install apt-transport-https ca-certificates
          sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
