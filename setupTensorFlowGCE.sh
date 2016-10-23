@@ -154,6 +154,7 @@ while true; do
          chmod +x Anaconda3-4.2.0-Linux-x86_64.sh
          bash ./Anaconda3-4.2.0-Linux-x86_64.sh
          echo 'export PATH=/home/$USER/anaconda3/bin:$PATH' >> .bashrc
+         source ~/.bashrc
          ~/anaconda3/bin/conda create -n tensorflow python=3.5
          source activate tensorflow
          ~/anaconda3/bin/conda install ipython
